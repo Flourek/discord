@@ -4,8 +4,17 @@ import { Client, GatewayIntentBits, Partials } from "discord.js";
 export default class BaseClient {
 	constructor(token) {
 		this.client = new Client({
-			intents: Object.values(GatewayIntentBits),
-			partials: Object.values(Partials),
+			intents: [
+				GatewayIntentBits.Guilds,
+				GatewayIntentBits.GuildMembers,
+				GatewayIntentBits.GuildMessages,
+				GatewayIntentBits.MessageContent
+			],
+			partials: [
+				Partials.User,
+				Partials.GuildMember,
+				Partials.Message
+			],
 			shards: "auto",
 		});
 		this.token = token;

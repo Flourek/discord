@@ -9,7 +9,12 @@
 	"license": "MIT",
 	"dependencies": {
 		"discord.js": "^14.22.1",
-		"winston": "^3.17.0"
+		"gifwrap": "^0.10.1",
+		"jimp": "^1.6.0",
+		"node-fetch": "^3.3.2",
+		"sharp": "^0.34.5",
+		"winston": "^3.17.0",
+		"ws": "^8.18.3"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.2.4",

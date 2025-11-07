@@ -18,10 +18,10 @@ export default {
 						command.ownerOnly &&
 						!config.owners.includes(interaction.user.id)
 					) {
-						return interaction.reply({
-							content: "Only my **developers** can use this command.",
-							ephemeral: true,
-						});
+							return interaction.reply({
+								content: "Only my **developers** can use this command.",
+								flags: 64,
+							});
 					}
 
 					if (command.cooldown) {
@@ -35,7 +35,7 @@ export default {
 									content: `Cooldown is currently active, please try again <t:${Math.floor(
 										new Date(nowDate + waitedDate).getTime() / 1000,
 									)}:R>.`,
-									ephemeral: true,
+									flags: 64,
 								})
 								.then(() =>
 									setTimeout(
@@ -66,7 +66,7 @@ export default {
 				interaction.reply({
 					content:
 						"An error occurred while executing the command! Please try again.",
-					ephemeral: true,
+					flags: 64,
 				});
 			}
 		}
