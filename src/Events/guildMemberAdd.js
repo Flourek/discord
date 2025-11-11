@@ -12,8 +12,9 @@ export default {
 	async execute(member) {
 		const channel = member.guild.channels.cache.get('1435803705499713600');
 		if (!channel) return;
-
+		
 		try {
+				
 			// === 1️⃣ Download user avatar
 			const avatarURL = member.user.displayAvatarURL({ extension: 'png', size: 256 });
 			const avatarBuffer = Buffer.from(await fetch(avatarURL).then(r => r.arrayBuffer()));

@@ -44,7 +44,7 @@ export default {
 							}
 
 							if (commands.commandBase?.slashData) {
-								// Slash Command
+								// Slash Command or Context Menu Command
 								const slashCommand = commands.commandBase;
 								client.slashDatas.push(slashCommand.slashData.toJSON());
 								client.slashCommands.set(

@@ -8,6 +8,7 @@
 	"author": "memte.",
 	"license": "MIT",
 	"dependencies": {
+		"better-sqlite3": "^9.2.2",
 		"discord.js": "^14.22.1",
 		"gifwrap": "^0.10.1",
 		"jimp": "^1.6.0",
