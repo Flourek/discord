@@ -1,6 +1,7 @@
 import { ActivityType, Events } from "discord.js";
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v10";
+import { addTimeout } from "../Handlers/database.js";
 
 export default {
 	name: Events.ClientReady,
@@ -8,9 +9,10 @@ export default {
 	async execute(client) {
 		const rest = new REST({ version: "10" }).setToken(client.token);
 
+
 		client.user.presence.set({
 			activities: [
-				// { name: "Developed by memte.", type: ActivityType.Listening },
+				{ name: "/leaderboard", type: ActivityType.Watching },
 			],
 		});
 

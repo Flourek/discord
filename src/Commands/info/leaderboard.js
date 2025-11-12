@@ -69,7 +69,8 @@ export const commandBase = {
                             (user, index) =>
                                 `${user.username}: **${user.timeoutCount}** `
                         )
-                        .join("\n")
+                        .join("\n") + "\n\n **5 Attempts = Special Role**"
+						
                 )
                 .setFooter({ text: `Total records: ${leaderboard.length}` });
 

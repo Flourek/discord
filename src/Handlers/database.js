@@ -3,7 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbPath = path.join(__dirname, "../..", "timeouts.db");
+const dbPath = path.join(__dirname, "../../sqlite", "timeouts.db");
 
 let db = null;
 
@@ -39,6 +39,16 @@ export default {
 		}
 	},
 };
+
+export function getTimeouts(userId) {
+	try {
+		const result = db.prepare("SELECT timeoutCount FROM timeouts WHERE userId = ?").get(userId);
+		return result ? result.timeoutCount : 0;
+	} catch (error) {
+		console.error("Error fetching timeouts:", error);
+		return 0;
+	}
+} 
 
 export function addTimeout(userId, username) {
 	try {

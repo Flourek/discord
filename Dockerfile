@@ -1,5 +1,5 @@
 # Use the official Node.js LTS image
-FROM node:20-alpine
+FROM node:20-bullseye-slim
 
 # Set working directory inside the container
 WORKDIR /app
