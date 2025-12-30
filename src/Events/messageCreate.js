@@ -15,10 +15,18 @@ export default {
 			return;
 		}
 
+		if (message.content.toLowerCase().startsWith("sudo")) {
+			return message.reply({
+					content: `${message.author.displayName} is not in the sudoers file. This incident will be reported.`,
+			});
+		}
+
 		const { prefix } = config;
 		if (!message.content.startsWith(prefix)) {
 			return;
 		}
+
+
 
 		const args = message.content.slice(prefix.length).trim().split(/ +/g);
 		const cmd = args.shift().toLowerCase();

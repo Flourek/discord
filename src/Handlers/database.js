@@ -24,6 +24,29 @@ export default {
 				)
 			`);
 
+			// Create border control stats table
+			db.exec(`
+				CREATE TABLE IF NOT EXISTS bordercontrol (
+					userId TEXT PRIMARY KEY,
+					username TEXT NOT NULL,
+					approvedCount INTEGER DEFAULT 0,
+					minorViolationCount INTEGER DEFAULT 0,
+					detainedCount INTEGER DEFAULT 0,
+					unfunnyCount INTEGER DEFAULT 0,
+					jorjiCount INTEGER DEFAULT 0,
+					createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+					updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+				)
+			`);
+
+			// Track messages that have already been forwarded to the hall of fame
+			db.exec(`
+				CREATE TABLE IF NOT EXISTS halloffame_messages (
+					messageId TEXT PRIMARY KEY,
+					forwardedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+				)
+			`);
+
 			if (botClient.logger) {
 				botClient.logger.info("Connected to SQLite database successfully");
 			} else {
@@ -79,5 +102,59 @@ export function getLeaderboard(limit = 10) {
 	} catch (error) {
 		console.error("Error fetching leaderboard:", error);
 		return [];
+	}
+}
+
+export function addBorderControlStat(userId, username, outcome) {
+	try {
+		const existing = db.prepare("SELECT * FROM bordercontrol WHERE userId = ?").get(userId);
+
+		const columnMap = {
+			approved: "approvedCount",
+			minor_violation: "minorViolationCount",
+			detained: "detainedCount",
+			unfunny: "unfunnyCount",
+			jorji: "jorjiCount"
+		};
+
+		const column = columnMap[outcome];
+		if (!column) {
+			console.error(`Unknown outcome: ${outcome}`);
+			return;
+		}
+
+		if (existing) {
+			db.prepare(
+				`UPDATE bordercontrol SET ${column} = ${column} + 1, updatedAt = CURRENT_TIMESTAMP WHERE userId = ?`
+			).run(userId);
+		} else {
+			db.prepare(
+				`INSERT INTO bordercontrol (userId, username, ${column}) VALUES (?, ?, 1)`
+			).run(userId, username);
+		}
+	} catch (error) {
+		console.error("Error adding border control stat:", error);
+	}
+}
+
+export function getBorderControlStats(userId) {
+	try {
+		const result = db.prepare("SELECT * FROM bordercontrol WHERE userId = ?").get(userId);
+		return result || { 
+			approvedCount: 0, 
+			minorViolationCount: 0, 
+			detainedCount: 0, 
+			unfunnyCount: 0, 
+			jorjiCount: 0 
+		};
+	} catch (error) {
+		console.error("Error fetching border control stats:", error);
+		return { 
+			approvedCount: 0, 
+			minorViolationCount: 0, 
+			detainedCount: 0, 
+			unfunnyCount: 0, 
+			jorjiCount: 0 
+		};
 	}
 }

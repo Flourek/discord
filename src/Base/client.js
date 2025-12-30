@@ -8,12 +8,15 @@ export default class BaseClient {
 				GatewayIntentBits.Guilds,
 				GatewayIntentBits.GuildMembers,
 				GatewayIntentBits.GuildMessages,
-				GatewayIntentBits.MessageContent
+				GatewayIntentBits.MessageContent,
+				GatewayIntentBits.GuildMessageReactions
 			],
 			partials: [
 				Partials.User,
 				Partials.GuildMember,
-				Partials.Message
+				Partials.Message,
+				Partials.Reaction,
+				Partials.Channel
 			],
 			shards: "auto",
 		});

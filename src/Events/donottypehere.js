@@ -43,7 +43,7 @@ export default {
 				const timeoutCount = getTimeouts(message.author.id);
 
 				// If more than 5 timeouts, assign role
-				if (timeoutCount > 5) {
+				if (timeoutCount >= 5) {
 					const roleId = "1438193012562722848";
 					const role = message.guild.roles.cache.get(roleId);
 
