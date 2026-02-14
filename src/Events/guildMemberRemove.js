@@ -4,6 +4,7 @@ export default {
     name: Events.GuildMemberRemove,
     once: false,
     async execute(member) {
+        return;
         const channel = member.guild.channels.cache.get('1435803705499713600');
         if (!channel) return;
 
