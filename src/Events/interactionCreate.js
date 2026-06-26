@@ -1,15 +1,30 @@
 import { Collection, Events, InteractionType } from "discord.js";
 import config from "../Base/config.js";
+import { isDefaultGuild } from "../Handlers/guilds.js";
 const cooldown = new Collection();
 
 export default {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
 		const { client } = interaction;
+
+		
 		if (interaction.type === InteractionType.ApplicationCommand) {
 			if (interaction.user.bot) {
 				return;
 			}
+			
+
+			// Guild restriction
+			console.log(interaction.guildId);
+			console.log(!isDefaultGuild(interaction.guildId));
+
+			if ( !isDefaultGuild(interaction.guildId) ){
+				return interaction.reply({
+					content: "Not enabled in this server.",
+					ephemeral: true,
+				});
+			} 
 
 			try {
 				const command = client.slashCommands.get(interaction.commandName);

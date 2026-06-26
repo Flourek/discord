@@ -40,12 +40,23 @@ export default {
 			`);
 
 			// Track messages that have already been forwarded to the hall of fame
+			// Migrate halloffame_messages table to add halloffameEmbedId if missing
 			db.exec(`
 				CREATE TABLE IF NOT EXISTS halloffame_messages (
 					messageId TEXT PRIMARY KEY,
+					halloffameEmbedId TEXT,
 					forwardedAt DATETIME DEFAULT CURRENT_TIMESTAMP
 				)
 			`);
+			// Add halloffameEmbedId column if it doesn't exist
+			try {
+				const columns = db.prepare("PRAGMA table_info(halloffame_messages)").all();
+				if (!columns.some(col => col.name === "halloffameEmbedId")) {
+					db.exec("ALTER TABLE halloffame_messages ADD COLUMN halloffameEmbedId TEXT");
+				}
+			} catch (e) {
+				console.error("Failed to migrate halloffame_messages table:", e);
+			}
 
 			if (botClient.logger) {
 				botClient.logger.info("Connected to SQLite database successfully");

@@ -13,6 +13,7 @@ export default {
 		// Target channel ID
 		const restrictedChannelId = "1450548000370982923";
 
+
 		// Check if message was sent in that channel
 		if (message.channel.id === restrictedChannelId) {
 			try {

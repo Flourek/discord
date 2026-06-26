@@ -12,7 +12,7 @@ export default {
 
 		client.user.presence.set({
 			activities: [
-				{ name: "/leaderboard", type: ActivityType.Watching },
+				{ name: "", type: ActivityType.Custom, emoji:"🌸", state:""},
 			],
 		});
 

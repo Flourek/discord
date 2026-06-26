@@ -25,6 +25,8 @@ export default class BaseClient {
 
 	loadHandlers() {
 		readdirSync("./src/Handlers").forEach(async (file) => {
+			if (file === "guilds.js") return;
+
 			const handlerFile = await import(`../Handlers/${file}`);
 			const handler = handlerFile.default;
 			handler.execute(this.client);

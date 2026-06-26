@@ -9,6 +9,7 @@ export default {
         const CHANNEL_ID = '1435803857954406522';
         const ws = new WebSocket('ws://ntfy.sh/flovrek/ws');
 
+            client.logger.info('tried to goonect');
         ws.on('open', () => {
             client.logger.info('Connected to ntfy flovrek channel');
         });
